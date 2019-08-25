@@ -19,13 +19,14 @@ const FilterSwitch = props => {
 };
 
 const FiltersScreen = props => {
+  const { navigation } = props;
+
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
 
   const saveFilters = useCallback(() => {
-    const { navigation } = props;
     const appliedFilters = {
       glutenFree: isGlutenFree,
       lactoseFree: isLactoseFree,
@@ -36,7 +37,7 @@ const FiltersScreen = props => {
 
   useEffect(() => {
     navigation.setParams({ save: saveFilters });
-  }, [saveFilters, navigation]);
+  }, [saveFilters]);
 
   return (
     <View style={styles.screen}>
@@ -93,9 +94,7 @@ FiltersScreen.navigationOptions = navData => {
         <Item
           title="Save"
           iconName="ios-save"
-          onPress={() => {
-            navData.navigation.getParam("save");
-          }}
+          onPress={navData.navigation.getParam("save")}
         />
       </HeaderButtons>
     )
